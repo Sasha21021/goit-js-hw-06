@@ -1,34 +1,35 @@
-class StringBuilder {
-  #value;
+class Storage {
+  #items;
 
-  constructor(initialValue) {
-    this.#value = initialValue;
+  constructor(initialItems) {
+    this.#items = initialItems;
   }
 
-  getValue() {
-    return this.#value;
+  getItems() {
+    return this.#items;
   }
 
-  padEnd(str) {
-    this.#value += str;
+  addItem(newItem) {
+    this.#items.push(newItem);
   }
 
-  padStart(str) {
-    this.#value = str + this.#value;
-  }
-
-  padBoth(str) {
-    this.padStart(str);
-    this.padEnd(str);
+  removeItem(itemToRemove) {
+    const index = this.#items.indexOf(itemToRemove);
+    if (index !== -1) {
+      this.#items.splice(index, 1);
+    }
   }
 }
 
 // Перевірка:
-const builder = new StringBuilder(".");
-console.log(builder.getValue()); // "."
-builder.padStart("^");
-console.log(builder.getValue()); // "^."
-builder.padEnd("^");
-console.log(builder.getValue()); // "^.^"
-builder.padBoth("=");
-console.log(builder.getValue()); // "=^.^="
+const storage = new Storage(["Nanitoids", "Prolonger", "Antigravitator"]);
+console.log(storage.getItems()); // ["Nanitoids", "Prolonger", "Antigravitator"]
+
+storage.addItem("Droid");
+console.log(storage.getItems()); // ["Nanitoids", "Prolonger", "Antigravitator", "Droid"]
+
+storage.removeItem("Prolonger");
+console.log(storage.getItems()); // ["Nanitoids", "Antigravitator", "Droid"]
+
+storage.removeItem("Scaner");
+console.log(storage.getItems()); // ["Nanitoids", "Antigravitator", "Droid"]
